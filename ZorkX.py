@@ -43,15 +43,15 @@ knownMessages = [inventoryMessage, healthMessage, quitMessage]
 knownCurrent = [inventory, health, null]
 
 #general commands
-def checkInput(thingToCheck, currentInventory, currentHealth):
-    for i in range (0, len(knownCommands)):
+def checkInput(thingToCheck):
+    for i in range (len(knownCommands)):
         if (knownCommands[i] in thingToCheck):
             print (knownMessages[i] + str(knownCurrent[i]))
 
 #tells the user where they are or just gives the coordinates if the place has no recorded name
 def identifyLocation(location):
     found = False
-    for i in range (0, len(tuplesList)):
+    for i in range (len(tuplesList)):
         if location[0] == (tuplesList[i])[0] and location[1] == (tuplesList[i])[1]:
             print (locationMessage + (tuplesList[i])[2])
             print ((tuplesList[i])[3])
@@ -86,21 +86,21 @@ while health > 0:
         print (nullMessage + fullStop)
         replies += 1
 
-    for i in range(0, len(knownCommands)):
+    for i in range (len(knownCommands)):
         if ((knownCommands[i]) in command):
-            checkInput(command, inventory, health)
+            checkInput(command)
             replies += 1
     
     #using up an item in the inventory
-    for i in range (0, len(inventory)):
-        if inventory[i] in command:
-            print (usedMessage + inventory[i] + fullStop)
-            inventory.remove(inventory[i])
+    for item in inventory:
+        if item in command:
+            print (usedMessage + item + fullStop)
+            inventory.remove(item)
             replies += 1
             break
 
     #deals with movement
-    for i in range (0, (len(directions))):
+    for i in range (len(directions)):
         if (directions[i] in command):
             if (i <= 1):
                 location[horiVerti[i]] += 1
