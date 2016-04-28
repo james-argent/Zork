@@ -25,8 +25,11 @@ location3 = (-1, 0, "The Shadow Tower")
 location4 = (0, 1, "Crastor's Keep")
 location5 = (0, 2, "The Fist of the First Men")
 location6 = (1, 2, "Hardhome")
-
-tuplesList = location1, location2, location3, location4, location5, location6
+location7 = (0, -1, "Moletown")
+location8 = (0, -2, "Winterfell")
+location9 = (1, -2, "The Dreadfort")
+location10 = (0, -3, "Moat Cailin")
+tuplesList = location1, location2, location3, location4, location5, location6, location7, location8, location9, location10
 
 #subject to change
 location = [0,0]
@@ -44,6 +47,7 @@ def checkInput(thingToCheck, currentInventory, currentHealth):
         if (knownCommands[i] in thingToCheck):
             print (knownMessages[i] + str(knownCurrent[i]))
 
+#tells the user where they are or just gives the coordinates if the place has no recorded name
 def identifyLocation(location):
     found = False
     for i in range (0, len(tuplesList)):
