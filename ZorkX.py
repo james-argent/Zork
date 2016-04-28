@@ -19,7 +19,7 @@ directions = ["north", "east", "south", "west"]
 successMove = "You travelled "
 horiVerti = [1, 0, 1, 0] #horizontal/vertical
 
-#location tuples
+#location tuples (x-coordinate, y-coordinate, location name, location comment)
 location1 = (0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne seems to be plotting something...")
 location2 = (1, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.")
 location3 = (-1, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.")
@@ -32,8 +32,8 @@ location9 = (1, -2, "The Dreadfort", "The seat of the traitorous House Bolton.")
 location10 = (0, -3, "Moat Cailin", "An important location by which to control the Neck.")
 tuplesList = location1, location2, location3, location4, location5, location6, location7, location8, location9, location10
 
-#subject to change
-location = [0,0]
+#information about your character which is subject to change
+location = [0,0] # Castle Black
 health = 10
 inventory = ["wine","mutton"]
 
