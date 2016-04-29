@@ -40,7 +40,7 @@ maxTurns = 100
 requiredPreparedness = 3
 maxRange = 5
 deadRange = maxRange + 1
-warningTurn = maxTurns / 0.75
+warningTurn = round(maxTurns / 0.75)
 distributableItems = ["dragonglass"]
 edibleItems = ["pork","mutton"]
 drinkableItems = ["wine"]
@@ -100,7 +100,7 @@ def identifyLocation(coordinates):
         print (unknownLocation)
 
 #3 second delay and exit
-def loseGame():
+def endGame():
     time.sleep(3)
     sys.exit(0)
 
@@ -189,7 +189,7 @@ while health > 0:
                 print (successMove + directions[dir] + fullStop)
                 if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= deadRange:
                     print (deserterMessage)
-                    loseGame()
+                    endGame()
                 if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
                     print (maxRangeMessage)
     
@@ -200,7 +200,7 @@ while health > 0:
     #win condition
     if len(completedCastles) == requiredPreparedness:
         print (wonMessage)
-        loseGame()
+        endGame()
         
     #passage of time
     timeElapsed += 1
@@ -208,8 +208,9 @@ while health > 0:
     #the loss condition of the game
     if timeElapsed == maxTurns:
         print(othersAttackMessage)
+        endGame()
     if timeElapsed == warningTurn:
         print(attackWarningMessage)
 
 print (deadMessage)
-loseGame()
+endGame()
