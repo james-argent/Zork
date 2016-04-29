@@ -15,6 +15,8 @@ usedMessage = "You used your "
 nullMessage = "Looks like you forgot to say anything "
 wonMessage = "You helped defeat the attack from the Others! You win! The program will now close."
 fullStop = "."
+maxRangeMessage = "You better stay near the wall or the Night's Watch may think you're deserting!"
+deserterMessage = "You've strayed too far from the wall and the Night's Watch have caught you and hung you as a deserter."
 takeMessage1 = "You put the "
 takeMessage2 = " into your inventory."
 deadMessage = "You died."
@@ -34,6 +36,8 @@ horiVerti = (1, 0, 1, 0) #horizontal/vertical
 maxInventorySize = 7
 maxTurns = 50
 requiredPreparedness = 3
+maxRange = 5
+deadRange = maxRange + 1
 distributableItems = ["dragonglass"]
 edibleItems = ["pork","mutton"]
 drinkableItems = ["wine"]
@@ -170,6 +174,12 @@ while health > 0:
                 userLocationCoordinates[horiVerti[dir]] -= 1
             reply = True
             print (successMove + directions[dir] + fullStop)
+            if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
+                print (maxRangeMessage)
+            if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= deadRange:
+                   print (deserterMessage)
+                   health = 0
+                   time.sleep(3)
     
     #for if the user's command was unrecognised
     if reply == False:
