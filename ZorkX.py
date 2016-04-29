@@ -58,13 +58,15 @@ class Location:
 locationsList = [Location(0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne always seems to be plotting something...", "", True),
                  Location(2, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.", "", True),
                  Location(-2, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.", "", True),
-                 Location(0, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.", "pork", False),
-                 Location(0, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...", "dragonglass", False),
-                 Location(1, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them.", "", False),
+                 Location(-1, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.", "pork", False),
+                 Location(-2, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...", "dragonglass", False),
+                 Location(2, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them.", "", False),
                  Location(0, -1, "Moletown", "Known for its attractive qualities.", "", False),
                  Location(0, -2, "Winterfell", "My old home. The north remembers.", "", False),
                  Location(2, -2, "The Dreadfort", "The seat of the traitorous House Bolton.", "", False),
-                 Location(0, -3, "Moat Cailin", "An important location by which to control the Neck.", "", False)]
+                 Location(0, -3, "Moat Cailin", "An important location by which to control the Neck.", "", False),
+                 Location(-1, 0, "Icemark", "An abandoned castle along the wall. There's noone here.", "", False),
+                 Location(1, 0, "Rimegate", "An abandoned castle along the wall. There's noone here.", "", False)]
 
 #information about your character which is subject to change
 userLocationCoordinates = [0,0] # Castle Black
