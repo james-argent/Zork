@@ -67,7 +67,7 @@ locationsList = [Location(0, 0, "Castle Black", "You're home, but something's no
                  Location(-1, 0, "Icemark", "An abandoned castle along the wall. There's noone here.", "", False),
                  Location(1, 0, "Rimegate", "An abandoned castle along the wall. There's noone here.", "", False),
                  Location(-1, -1, "Queen's Crown", "An abandoned holdfast and village.", "", False),
-                 Location(3, -2, "Karhold", "A strong northern castle and the seat of House Karstark.", "", False),]
+                 Location(2, -2, "Karhold", "A strong northern castle and the seat of House Karstark.", "", False),]
 
 #information about your character which is subject to change
 userLocationCoordinates = [0,0] # Castle Black
