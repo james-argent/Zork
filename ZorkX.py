@@ -16,7 +16,7 @@ defaultUserName = "Jon Snow"
 unknownCommand = "That command was unknown. Please enter another."
 unknownLocation = "This location doesn't have a name."
 idleMessage = "What would you like to do now?\n"
-userNameWrong = nullMessage + ", I will just call you " + defaultUserName + fullStop
+userNameWrong = nullMessage + ", I will just call you " + defaultUserName + "."
 null = ""
 directions = ("north", "east", "south", "west")
 successMove = "You travelled "
@@ -27,7 +27,7 @@ loc1 = [0, 0, "Castle Black", "You're home, but something's not right, Ser Allis
 loc2 = [1, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.",""]
 loc3 = [-1, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.",""]
 loc4 = [0, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.","pork"]
-loc5 = [0, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers?",""]
+loc5 = [0, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...","dragonglass"]
 loc6 = [1, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them.",""]
 loc7 = [0, -1, "Moletown", "Known for its attractive qualities.",""]
 loc8 = [0, -2, "Winterfell", "My old home. The north remembers.",""]
@@ -49,7 +49,7 @@ knownCurrent = [inventory, health, null]
 #general commands
 def checkInput(thingToCheck):
     for i in range (len(knownCommands)):
-        if (knownCommands[i] in thingToCheck):
+        if knownCommands[i] in thingToCheck:
             print (knownMessages[i] + str(knownCurrent[i]))
 
 #tells the user where they are or just gives the coordinates if the place has no recorded name
@@ -79,7 +79,7 @@ print (healthMessage + str(health))
 
 #keep the game going as long as the user is 'alive'
 while health > 0:
-    replies = 0
+    reply = False
     inventoryAction = False
 
     #update the user on their situation
@@ -91,23 +91,23 @@ while health > 0:
 
     if command == null:
         print (nullMessage + fullStop)
-        replies += 1
+        reply = True
 
     for i in range (len(knownCommands)):
         if ((knownCommands[i]) in command):
             checkInput(command)
-            replies += 1
+            reply = True
  
     #picking up an item
     for i in range (len(locationsList)):
-        if (currentLocationName == (locationsList[i])[2]):
+        if currentLocationName == (locationsList[i])[2]:
             if (((locationsList[i])[4]) in command) and ((locationsList[i])[4] is not null):
                 if (len(inventory)) < 7:
                     inventory.append((locationsList[i])[4])
                     print (takeMessage1 + (locationsList[i])[4] + takeMessage2)
                 else:
                     print (inventoryFullMessage)
-                replies += 1
+                reply = True
                 inventoryAction = True
                
     #using up an item in the inventory
@@ -116,7 +116,7 @@ while health > 0:
             if item in command:
                 print (usedMessage + item + fullStop)
                 inventory.remove(item)
-                replies += 1
+                reply = True
                 break
 
     #deals with movement
@@ -126,11 +126,11 @@ while health > 0:
                 location[horiVerti[i]] += 1
             else:
                 location[horiVerti[i]] -= 1
-            replies += 1
+            reply = True
             print (successMove + directions[i] + fullStop)
     
     #for if the user's command was unrecognised
-    if (replies == 0):
+    if reply == False:
         print (unknownCommand)
 
 print (deadMessage)
