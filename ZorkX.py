@@ -1,4 +1,5 @@
 import sys
+import time
 
 #stuff that should never change and doesn't fit the other categories
 nameRequest = "What is your name, adventurer?\n"
@@ -11,8 +12,8 @@ ateMessage = "You ate your "
 drankMessage = "You drank your "
 dragonglassMessage = "You handed out the dragonglass."
 usedMessage = "You used your "
-nullMessage = "Looks like you forgot to say anything"
-wonMessage = "You helped defeat the attack from the Others! You win!"
+nullMessage = "Looks like you forgot to say anything "
+wonMessage = "You helped defeat the attack from the Others! You win! The program will now close."
 fullStop = "."
 takeMessage1 = "You put the "
 takeMessage2 = " into your inventory."
@@ -20,11 +21,12 @@ deadMessage = "You died."
 othersAttackMessage = "Oh no, the Others attacked and you were unprepared!"
 inventoryFullMessage = "Your inventory is too full!"
 defaultUserName = "Jon Snow"
-unknownCommand = "That command was unknown. Please enter another."
+unknownCommand = "That command was unknown. Please enter another.\n"
 unknownLocation = "This location doesn't have a name."
 idleMessage = "What would you like to do now?\n"
-userNameWrong = nullMessage + ", I will just call you " + defaultUserName + "."
+userNameWrong = nullMessage + ", I will just call you " + defaultUserName + ".\n"
 null = ""
+newLine = "\n"
 directions = ("north", "east", "south", "west")
 successMove = "You travelled "
 timeElapsed = 0
@@ -92,12 +94,13 @@ def identifyLocation(coordinates):
 userName = input(nameRequest)
 if len(userName) < 1:
         print (userNameWrong)
+        time.sleep(0.5)
         userName = defaultUserName
 
 #introductory messages
-print (welcomeMessage + userName + fullStop)
+print (welcomeMessage + userName + fullStop + newLine)
 print (inventoryMessage + str(inventory))
-print (healthMessage + str(health))
+print (healthMessage + str(health) + newLine)
 
 #keep the game going as long as the user is 'alive'
 while health > 0:
@@ -111,8 +114,10 @@ while health > 0:
     command = input(idleMessage)
     command = command.lower()
 
+    print (newLine)
+
     if command == null:
-        print (nullMessage + fullStop)
+        print (nullMessage + fullStop + newLine)
         reply = True
 
     for knownCommand in knownCommands:
@@ -173,6 +178,7 @@ while health > 0:
     #win condition
     if len(completedCastles) == requiredPreparedness:
         print (wonMessage)
+        time.sleep(3)
         sys.exit(0)
         
     #passage of time
