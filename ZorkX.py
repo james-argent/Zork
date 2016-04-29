@@ -32,7 +32,7 @@ newLine = "\n"
 directions = ("north", "east", "south", "west")
 successMove = "You travelled "
 timeElapsed = 0
-horiVerti = (1, 0, 1, 0) #horizontal/vertical
+horiVerti = (1, 0, 1, 0)
 maxInventorySize = 7
 maxTurns = 50
 requiredPreparedness = 3
@@ -94,6 +94,11 @@ def identifyLocation(coordinates):
         print (locationMessage + str(coordinates))
         print (unknownLocation)
 
+#3 second delay and exit
+def loseGame():
+    time.sleep(3)
+    sys.exit(0)
+
 #if the user doesn't enter a name, they're given a default name
 userName = input(nameRequest)
 if len(userName) < 1:
@@ -117,7 +122,6 @@ while health > 0:
     #ask for next action
     command = input(idleMessage)
     command = command.lower()
-
     print (newLine)
 
     if command == null:
@@ -174,12 +178,11 @@ while health > 0:
                 userLocationCoordinates[horiVerti[dir]] -= 1
             reply = True
             print (successMove + directions[dir] + fullStop)
+            if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= deadRange:
+                print (deserterMessage)
+                loseGame()
             if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
                 print (maxRangeMessage)
-            if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= deadRange:
-                   print (deserterMessage)
-                   health = 0
-                   time.sleep(3)
     
     #for if the user's command was unrecognised
     if reply == False:
@@ -188,8 +191,7 @@ while health > 0:
     #win condition
     if len(completedCastles) == requiredPreparedness:
         print (wonMessage)
-        time.sleep(3)
-        sys.exit(0)
+        loseGame()
         
     #passage of time
     timeElapsed += 1
@@ -199,3 +201,4 @@ while health > 0:
         print(othersAttackMessage)
 
 print (deadMessage)
+loseGame()
