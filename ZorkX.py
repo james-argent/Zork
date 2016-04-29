@@ -3,6 +3,8 @@ import time
 
 #stuff that should never change and doesn't fit the other categories
 nameRequest = "What is your name, adventurer?\n"
+difficultyIntroMessage = "What difficulty would you like the game to be? Easy, Medium, or Hard?\n"
+difficultySelectedMessage = "You have selected the difficulty: "
 welcomeMessage = "Welcome to Westeros, "
 inventoryMessage = "Your current inventory is: "
 locationMessage = "Your current location is: "
@@ -37,6 +39,8 @@ timeElapsed = 0
 horiVerti = (1, 0, 1, 0)
 maxInventorySize = 7
 maxTurns = 100
+hardMaxTurns = 48
+easyMaxTurns = 200
 requiredPreparedness = 3
 maxRange = 5
 deadRange = maxRange + 1
@@ -45,6 +49,7 @@ distributableItems = ["dragonglass"]
 edibleItems = ["pork","mutton"]
 drinkableItems = ["wine"]
 completedCastles = []
+possibleDifficulties = ["easy","medium","hard"]
 
 class Location:
     def __init__(self, x, y, name, comment, item, winCon):
@@ -111,6 +116,14 @@ if len(userName) < 1:
         print (userNameWrong)
         time.sleep(0.5)
         userName = defaultUserName
+
+difficulty = input(difficultyIntroMessage)
+difficulty = difficulty.lower()
+if difficulty == possibleDifficulties[0]:
+    maxTurns = easyMaxTurns
+if difficulty == possibleDifficulties[2]:
+    maxTurns = hardMaxTurns
+print (difficultySelectedMessage + difficulty + fullStop + newLine)
 
 #introductory messages
 print (welcomeMessage + userName + fullStop + newLine)
