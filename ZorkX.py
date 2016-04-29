@@ -62,11 +62,12 @@ locationsList = [Location(0, 0, "Castle Black", "You're home, but something's no
                  Location(-2, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...", "dragonglass", False),
                  Location(2, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them.", "", False),
                  Location(0, -1, "Moletown", "Known for its attractive qualities.", "", False),
-                 Location(0, -2, "Winterfell", "My old home. The north remembers.", "", False),
-                 Location(2, -2, "The Dreadfort", "The seat of the traitorous House Bolton.", "", False),
-                 Location(0, -3, "Moat Cailin", "An important location by which to control the Neck.", "", False),
+                 Location(0, -4, "Winterfell", "My old home. The north remembers.", "", False),
+                 Location(2, -3, "The Dreadfort", "The seat of the traitorous House Bolton.", "", False),
                  Location(-1, 0, "Icemark", "An abandoned castle along the wall. There's noone here.", "", False),
-                 Location(1, 0, "Rimegate", "An abandoned castle along the wall. There's noone here.", "", False)]
+                 Location(1, 0, "Rimegate", "An abandoned castle along the wall. There's noone here.", "", False),
+                 Location(-1, -1, "Queen's Crown", "An abandoned holdfast and village.", "", False),
+                 Location(3, -2, "Karhold", "A strong northern castle and the seat of House Karstark.", "", False),]
 
 #information about your character which is subject to change
 userLocationCoordinates = [0,0] # Castle Black
