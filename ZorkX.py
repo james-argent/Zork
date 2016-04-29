@@ -5,12 +5,16 @@ inventoryMessage = "Your current inventory is: "
 locationMessage = "Your current location is: "
 healthMessage = "Your current health is: "
 quitMessage = "If you would like to quit, just close the console."
+ateMessage = "You ate your "
+drankMessage = "You drank your "
+dragonglassMessage = "You handed out the dragonglass."
 usedMessage = "You used your "
 nullMessage = "Looks like you forgot to say anything"
 fullStop = "."
 takeMessage1 = "You put the "
 takeMessage2 = " into your inventory."
 deadMessage = "You died."
+othersAttackMessage = "Oh no, the Others attacked and you were unprepared!"
 inventoryFullMessage = "Your inventory is too full!"
 defaultUserName = "Jon Snow"
 unknownCommand = "That command was unknown. Please enter another."
@@ -20,10 +24,11 @@ userNameWrong = nullMessage + ", I will just call you " + defaultUserName + "."
 null = ""
 directions = ("north", "east", "south", "west")
 successMove = "You travelled "
+timeElapsed = 0
 horiVerti = (1, 0, 1, 0) #horizontal/vertical
 
 #location tuples (x-coordinate, y-coordinate, location name, location comment)
-loc1 = [0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne seems to be plotting something...",""]
+loc1 = [0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne always seems to be plotting something...",""]
 loc2 = [1, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.",""]
 loc3 = [-1, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.",""]
 loc4 = [0, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.","pork"]
@@ -114,10 +119,21 @@ while health > 0:
     if inventoryAction == False:
         for item in inventory:
             if item in command:
-                print (usedMessage + item + fullStop)
-                inventory.remove(item)
-                reply = True
-                break
+                if item == "dragonglass":
+                    print (dragonglassMessage)
+                    inventory.remove(item)
+                    reply = True
+                    break
+                if item == "pork" or item == "mutton":
+                    print (ateMessage + item + fullStop)
+                    inventory.remove(item)
+                    reply = True
+                    break
+                if item == "wine":
+                    print (drankMessage + item + fullStop)
+                    inventory.remove(item)
+                    reply = True
+                    break
 
     #deals with movement
     for i in range (len(directions)):
@@ -132,5 +148,13 @@ while health > 0:
     #for if the user's command was unrecognised
     if reply == False:
         print (unknownCommand)
+        
+    #passage of time
+    timeElapsed += 1
+
+    #the loss condition of the game
+    if timeElapsed == 50:
+        print(othersAttackMessage)
+        health = 0
 
 print (deadMessage)
