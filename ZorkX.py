@@ -51,6 +51,7 @@ drinkableItems = ["wine"]
 completedCastles = []
 possibleDifficulties = ["easy","medium","hard"]
 
+#allows for the referral of locations' attributes by referring to the actual attribute names
 class Location:
     def __init__(self, x, y, name, comment, item, winCon):
         self.x = x
@@ -60,6 +61,7 @@ class Location:
         self.item = item
         self.winCon = winCon
 
+#list of all of the known locations in the program
 locationsList = [Location(0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne always seems to be plotting something...", "", True),
                  Location(2, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.", "", True),
                  Location(-2, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.", "", True),
@@ -117,11 +119,12 @@ if len(userName) < 1:
         time.sleep(0.5)
         userName = defaultUserName
 
+#user selects a difficulty level
 difficulty = input(difficultyIntroMessage)
 difficulty = difficulty.lower()
-if difficulty == possibleDifficulties[0]:
+if difficulty == possibleDifficulties[0]: #easy mode
     maxTurns = easyMaxTurns
-if difficulty == possibleDifficulties[2]:
+if difficulty == possibleDifficulties[2]: #hard mode
     maxTurns = hardMaxTurns
 print (difficultySelectedMessage + difficulty + fullStop + newLine)
 
@@ -143,10 +146,12 @@ while health > 0:
     command = command.lower()
     print (newLine)
 
+    #catches if the user didn't put in an input
     if command == null:
         print (nullMessage + fullStop + newLine)
         reply = True
 
+    #catches the generic requests "inventory", "health" and "quit"
     for knownCommand in knownCommands:
         if knownCommand in command:
             checkInput(command)
