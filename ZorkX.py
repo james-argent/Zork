@@ -27,21 +27,27 @@ successMove = "You travelled "
 timeElapsed = 0
 horiVerti = (1, 0, 1, 0) #horizontal/vertical
 
-#location tuples (x-coordinate, y-coordinate, location name, location comment)
-loc1 = [0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne always seems to be plotting something...",""]
-loc2 = [1, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.",""]
-loc3 = [-1, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.",""]
-loc4 = [0, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.","pork"]
-loc5 = [0, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...","dragonglass"]
-loc6 = [1, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them.",""]
-loc7 = [0, -1, "Moletown", "Known for its attractive qualities.",""]
-loc8 = [0, -2, "Winterfell", "My old home. The north remembers.",""]
-loc9 = [1, -2, "The Dreadfort", "The seat of the traitorous House Bolton.",""]
-loc10 = [0, -3, "Moat Cailin", "An important location by which to control the Neck.",""]
-locationsList = [loc1, loc2, loc3, loc4, loc5, loc6, loc7, loc8, loc9, loc10]
+class Location:
+    def __init__(self, x, y, name, comment, item):
+        self.x = x
+        self.y = y
+        self.name = name
+        self.comment = comment
+        self.item = item
+
+locationsList = [Location(0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne always seems to be plotting something...",""),
+                 Location(1, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.",""),
+                 Location(-1, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.",""),
+                 Location(0, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.","pork"),
+                 Location(0, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...","dragonglass"),
+                 Location(1, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them.",""),
+                 Location(0, -1, "Moletown", "Known for its attractive qualities.",""),
+                 Location(0, -2, "Winterfell", "My old home. The north remembers.",""),
+                 Location(1, -2, "The Dreadfort", "The seat of the traitorous House Bolton.",""),
+                 Location(0, -3, "Moat Cailin", "An important location by which to control the Neck.","")]
 
 #information about your character which is subject to change
-location = [0,0] # Castle Black
+userLocationCoordinates = [0,0] # Castle Black
 health = 10
 inventory = ["wine","mutton"]
 currentLocationName = ""
@@ -58,22 +64,22 @@ def checkInput(thingToCheck):
             print (knownMessages[i] + str(knownCurrent[i]))
 
 #tells the user where they are or just gives the coordinates if the place has no recorded name
-def identifyLocation(location):
+def identifyLocation(coordinates):
     found = False
     for i in range (len(locationsList)):
-        if location[0] == (locationsList[i])[0] and location[1] == (locationsList[i])[1]:
-            print (locationMessage + (locationsList[i])[2])
-            print ((locationsList[i])[3])
+        if coordinates[0] == (locationsList[i]).x and coordinates[1] == (locationsList[i]).y:
+            print (locationMessage + (locationsList[i]).name)
+            print ((locationsList[i]).comment)
             found = True
             global currentLocationName
-            currentLocationName = (locationsList[i])[2]
+            currentLocationName = (locationsList[i]).name
     if found == False:
-        print (locationMessage + str(location))
+        print (locationMessage + str(coordinates))
         print (unknownLocation)
 
 #if the user doesn't enter a name, they're given a default name
 userName = input(nameRequest)
-if (len(userName) < 1):
+if len(userName) < 1:
         print (userNameWrong)
         userName = defaultUserName
 
@@ -88,7 +94,7 @@ while health > 0:
     inventoryAction = False
 
     #update the user on their situation
-    identifyLocation(location)
+    identifyLocation(userLocationCoordinates)
 
     #ask for next action
     command = input(idleMessage)
@@ -98,18 +104,18 @@ while health > 0:
         print (nullMessage + fullStop)
         reply = True
 
-    for i in range (len(knownCommands)):
-        if ((knownCommands[i]) in command):
+    for knownCommand in knownCommands:
+        if knownCommand in command:
             checkInput(command)
             reply = True
  
     #picking up an item
-    for i in range (len(locationsList)):
-        if currentLocationName == (locationsList[i])[2]:
-            if (((locationsList[i])[4]) in command) and ((locationsList[i])[4] is not null):
-                if (len(inventory)) < 7:
-                    inventory.append((locationsList[i])[4])
-                    print (takeMessage1 + (locationsList[i])[4] + takeMessage2)
+    for location in locationsList:
+        if currentLocationName == location.name:
+            if location.item in command and location.item is not null:
+                if len(inventory) < 7:
+                    inventory.append(location.item)
+                    print (takeMessage1 + location.item + takeMessage2)
                 else:
                     print (inventoryFullMessage)
                 reply = True
@@ -136,14 +142,14 @@ while health > 0:
                     break
 
     #deals with movement
-    for i in range (len(directions)):
-        if (directions[i] in command):
-            if (i <= 1):
-                location[horiVerti[i]] += 1
+    for dir in range(len(directions)):
+        if directions[dir] in command:
+            if dir <= 1:
+                userLocationCoordinates[horiVerti[dir]] += 1
             else:
-                location[horiVerti[i]] -= 1
+                userLocationCoordinates[horiVerti[dir]] -= 1
             reply = True
-            print (successMove + directions[i] + fullStop)
+            print (successMove + directions[dir] + fullStop)
     
     #for if the user's command was unrecognised
     if reply == False:
