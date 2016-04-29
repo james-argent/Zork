@@ -26,6 +26,8 @@ directions = ("north", "east", "south", "west")
 successMove = "You travelled "
 timeElapsed = 0
 horiVerti = (1, 0, 1, 0) #horizontal/vertical
+maxInventorySize = 7
+maxTurns = 50
 
 class Location:
     def __init__(self, x, y, name, comment, item):
@@ -113,7 +115,7 @@ while health > 0:
     for location in locationsList:
         if currentLocationName == location.name:
             if location.item in command and location.item is not null:
-                if len(inventory) < 7:
+                if len(inventory) < maxInventorySize:
                     inventory.append(location.item)
                     print (takeMessage1 + location.item + takeMessage2)
                 else:
@@ -159,7 +161,7 @@ while health > 0:
     timeElapsed += 1
 
     #the loss condition of the game
-    if timeElapsed == 50:
+    if timeElapsed == maxTurns:
         print(othersAttackMessage)
         health = 0
 
