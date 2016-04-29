@@ -14,9 +14,11 @@ dragonglassMessage = "You handed out the dragonglass."
 usedMessage = "You used your "
 nullMessage = "Looks like you forgot to say anything "
 wonMessage = "You helped defeat the attack from the Others! You win! The program will now close."
+seaMessage = "You can't go there, that's the sea!"
 fullStop = "."
 maxRangeMessage = "You better stay near the wall or the Night's Watch may think you're deserting!"
 deserterMessage = "You've strayed too far from the wall and the Night's Watch have caught you and hung you as a deserter."
+attackWarningMessage = "Careful, you're running out of time!"
 takeMessage1 = "You put the "
 takeMessage2 = " into your inventory."
 deadMessage = "You died."
@@ -34,10 +36,11 @@ successMove = "You travelled "
 timeElapsed = 0
 horiVerti = (1, 0, 1, 0)
 maxInventorySize = 7
-maxTurns = 50
+maxTurns = 100
 requiredPreparedness = 3
 maxRange = 5
 deadRange = maxRange + 1
+warningTurn = maxTurns / 0.75
 distributableItems = ["dragonglass"]
 edibleItems = ["pork","mutton"]
 drinkableItems = ["wine"]
@@ -52,16 +55,16 @@ class Location:
         self.item = item
         self.winCon = winCon
 
-locationsList = [Location(0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne always seems to be plotting something...","",True),
-                 Location(1, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.","",True),
-                 Location(-1, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.","",True),
-                 Location(0, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.","pork",False),
-                 Location(0, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...","dragonglass",False),
-                 Location(1, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them.","",False),
-                 Location(0, -1, "Moletown", "Known for its attractive qualities.","",False),
-                 Location(0, -2, "Winterfell", "My old home. The north remembers.","",False),
-                 Location(1, -2, "The Dreadfort", "The seat of the traitorous House Bolton.","",False),
-                 Location(0, -3, "Moat Cailin", "An important location by which to control the Neck.","",False)]
+locationsList = [Location(0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne always seems to be plotting something...", "", True),
+                 Location(2, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.", "", True),
+                 Location(-2, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.", "", True),
+                 Location(0, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.", "pork", False),
+                 Location(0, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...", "dragonglass", False),
+                 Location(1, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them.", "", False),
+                 Location(0, -1, "Moletown", "Known for its attractive qualities.", "", False),
+                 Location(0, -2, "Winterfell", "My old home. The north remembers.", "", False),
+                 Location(2, -2, "The Dreadfort", "The seat of the traitorous House Bolton.", "", False),
+                 Location(0, -3, "Moat Cailin", "An important location by which to control the Neck.", "", False)]
 
 #information about your character which is subject to change
 userLocationCoordinates = [0,0] # Castle Black
@@ -172,17 +175,21 @@ while health > 0:
     #deals with movement
     for dir in range(len(directions)):
         if directions[dir] in command:
-            if dir <= 1:
-                userLocationCoordinates[horiVerti[dir]] += 1
+            if (directions[dir] == directions[1] and userLocationCoordinates[0] == 2) or (directions[dir] == directions[3] and userLocationCoordinates[0] == -2):
+                print (seaMessage)
+                reply = True
             else:
-                userLocationCoordinates[horiVerti[dir]] -= 1
-            reply = True
-            print (successMove + directions[dir] + fullStop)
-            if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= deadRange:
-                print (deserterMessage)
-                loseGame()
-            if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
-                print (maxRangeMessage)
+                if dir <= 1:
+                    userLocationCoordinates[horiVerti[dir]] += 1
+                else:
+                    userLocationCoordinates[horiVerti[dir]] -= 1
+                reply = True
+                print (successMove + directions[dir] + fullStop)
+                if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= deadRange:
+                    print (deserterMessage)
+                    loseGame()
+                if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
+                    print (maxRangeMessage)
     
     #for if the user's command was unrecognised
     if reply == False:
@@ -199,6 +206,8 @@ while health > 0:
     #the loss condition of the game
     if timeElapsed == maxTurns:
         print(othersAttackMessage)
+    if timeElapsed == warningTurn:
+        print(attackWarningMessage)
 
 print (deadMessage)
 loseGame()
