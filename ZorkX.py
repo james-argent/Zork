@@ -24,6 +24,7 @@ attackWarningMessage = "Careful, you're running out of time!"
 takeMessage1 = "You put the "
 takeMessage2 = " into your inventory."
 deadMessage = "You died."
+defaultDifficultyMessage = "You didn't enter a valid difficulty, so the difficulty has been set by default to medium."
 othersAttackMessage = "Oh no, the Others attacked and you were unprepared!"
 inventoryFullMessage = "Your inventory is too full!"
 defaultUserName = "Jon Snow"
@@ -53,7 +54,7 @@ possibleDifficulties = ["easy","medium","hard"]
 
 #allows for the referral of locations' attributes by referring to the actual attribute names
 class Location:
-    def __init__(self, x, y, name, comment, item, winCon, visits):
+    def __init__(self, x, y, name, comment, item = "", winCon = False, visits = 0):
         self.x = x
         self.y = y
         self.name = name
@@ -63,19 +64,19 @@ class Location:
         self.visits = visits
 
 #list of all of the known locations in the program
-locationsList = [Location(0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne always seems to be plotting something...", "", True, 0),
-                 Location(2, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.", "", True, 0),
-                 Location(-2, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.", "", True, 0),
-                 Location(-1, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.", "pork", False, 0),
-                 Location(-2, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...", "dragonglass", False, 0),
-                 Location(2, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them.", "", False, 0),
-                 Location(0, -1, "Moletown", "Known for its attractive qualities.", "", False, 0),
-                 Location(0, -4, "Winterfell", "My old home. The north remembers.", "", False, 0),
-                 Location(2, -3, "The Dreadfort", "The seat of the traitorous House Bolton.", "", False, 0),
-                 Location(-1, 0, "Icemark", "An abandoned castle along the wall. There's noone here.", "", False, 0),
-                 Location(1, 0, "Rimegate", "An abandoned castle along the wall. There's noone here.", "", False, 0),
-                 Location(-1, -1, "Queen's Crown", "An abandoned holdfast and village.", "", False, 0),
-                 Location(2, -2, "Karhold", "A strong northern castle and the seat of House Karstark.", "", False, 0)]
+locationsList = [Location(0, 0, "Castle Black", "You're home, but something's not right, Ser Alliser Thorne always seems to be plotting something...", winCon = True),
+                 Location(2, 0, "Eastwatch-by-the-Sea", "One of the only manned castles along the wall. The castle furthest East.", winCon = True),
+                 Location(-2, 0, "The Shadow Tower", "One of the three remaining manned castles along the wall.", winCon = True),
+                 Location(-1, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.", "pork"),
+                 Location(-2, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...", "dragonglass"),
+                 Location(2, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them."),
+                 Location(0, -1, "Moletown", "Known for its attractive qualities."),
+                 Location(0, -4, "Winterfell", "My old home. The north remembers."),
+                 Location(2, -3, "The Dreadfort", "The seat of the traitorous House Bolton."),
+                 Location(-1, 0, "Icemark", "An abandoned castle along the wall. There's noone here."),
+                 Location(1, 0, "Rimegate", "An abandoned castle along the wall. There's noone here."),
+                 Location(-1, -1, "Queen's Crown", "An abandoned holdfast and village."),
+                 Location(2, -2, "Karhold", "A strong northern castle and the seat of House Karstark.")]
 
 #information about your character which is subject to change
 userLocationCoordinates = [0,0] # Castle Black
@@ -98,13 +99,14 @@ def checkInput(thingToCheck):
 def identifyLocation(coordinates):
     found = False
     for i in range (len(locationsList)):
-        if coordinates[0] == (locationsList[i]).x and coordinates[1] == (locationsList[i]).y:
-            print (locationMessage + (locationsList[i]).name)
-            print ((locationsList[i]).comment)
+        currentLocation = locationsList[i]
+        if coordinates[0] == locationsList[i].x and coordinates[1] == locationsList[i].y:
+            print (locationMessage + locationsList[i].name)
+            print (locationsList[i].comment)
             locationsList[i].visits += 1
             found = True
             global currentLocationName
-            currentLocationName = (locationsList[i]).name
+            currentLocationName = locationsList[i].name
     if found == False:
         print (locationMessage + str(coordinates))
         print (unknownLocation)
@@ -126,9 +128,16 @@ difficulty = input(difficultyIntroMessage)
 difficulty = difficulty.lower()
 if difficulty == possibleDifficulties[0]: #easy mode
     maxTurns = easyMaxTurns
+    print (difficultySelectedMessage + difficulty + fullStop + newLine)
+if difficulty == possibleDifficulties[1]: #medium mode
+    print (difficultySelectedMessage + difficulty + fullStop + newLine)
 if difficulty == possibleDifficulties[2]: #hard mode
     maxTurns = hardMaxTurns
-print (difficultySelectedMessage + difficulty + fullStop + newLine)
+    print (difficultySelectedMessage + difficulty + fullStop + newLine)
+if difficulty not in possibleDifficulties:
+    difficulty = possibleDifficulties[1]
+    print (defaultDifficultyMessage)
+
 
 #introductory messages
 print (welcomeMessage + userName + fullStop + newLine)
