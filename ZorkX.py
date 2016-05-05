@@ -16,6 +16,7 @@ nullMessage = "Looks like you forgot to say anything "
 seaMessage = "You can't go there, that's the sea!"
 alreadyDoneMessage = "You've already done that!"
 fullStop = "."
+illEquippedMessage = "You don't have any "
 irrelevenceHint = "Not much to do here."
 maxRangeMessage = "You better stay near the wall or the Night's Watch may think you're deserting!"
 deserterMessage = "You've strayed too far from the wall and the Night's Watch have caught you and hung you as a deserter."
@@ -51,6 +52,7 @@ warningTurn = round(maxTurns / 0.75)
 distributableItems = ["dragonglass"]
 edibleItems = ["pork","mutton"]
 drinkableItems = ["wine"]
+allItems = distributableItems + edibleItems + drinkableItems
 completedCastles = []
 possibleDifficulties = ["easy","medium","hard"]
 
@@ -222,6 +224,12 @@ while health > 0:
                     endGame()
                 if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
                     print (maxRangeMessage)
+
+    if reply == False:
+        for item in allItems:
+            if item in command:
+                print (illEquippedMessage + item + fullStop)
+                reply = True
     
     #for if the user's command was unrecognised
     if reply == False:
