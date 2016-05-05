@@ -15,6 +15,7 @@ dragonglassMessage = "You handed out the dragonglass."
 nullMessage = "Looks like you forgot to say anything "
 seaMessage = "You can't go there, that's the sea!"
 fullStop = "."
+irrelevenceHint = "Not much to do here."
 maxRangeMessage = "You better stay near the wall or the Night's Watch may think you're deserting!"
 deserterMessage = "You've strayed too far from the wall and the Night's Watch have caught you and hung you as a deserter."
 attackWarningMessage = "Careful, you're running out of time!"
@@ -103,7 +104,10 @@ def identifyLocation(coordinates):
             print (locationMessage + locationsList[i].name)
             print (locationsList[i].comment)
             locationsList[i].visits += 1
+            if locationsList[i].visits >= 5 and locationsList[i].winCon == False and locationsList[i].item == null:
+                print (irrelevenceHint)
             found = True
+            print 
             global currentLocationName
             currentLocationName = locationsList[i].name
     if found == False:
