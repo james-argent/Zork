@@ -111,7 +111,7 @@ def identifyLocation(coordinates):
 
 #3 second delay and exit
 def endGame():
-    time.sleep(3)
+    time.sleep(4)
     sys.exit(0)
 
 #if the user doesn't enter a name, they're given a default name
@@ -180,12 +180,12 @@ while health > 0:
                 for location in locationsList:
                     if currentLocationName == location.name:
                         if item in distributableItems and location.winCon == True:
-                            print (dragonglassMessage)
                             if location.name not in completedCastles:
                                 completedCastles.append(location.name)
-                            inventory.remove(item)
-                            reply = True
-                            break
+                                inventory.remove(item)
+                                print (dragonglassMessage)
+                                reply = True
+                                break
                 if item in edibleItems:
                     print (ateMessage + item + fullStop)
                     inventory.remove(item)
