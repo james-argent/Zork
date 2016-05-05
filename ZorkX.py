@@ -48,7 +48,7 @@ possibleMaxTurns = [48,100,200]
 requiredPreparedness = 3
 maxRange = 5
 deadRange = maxRange + 1
-warningTurn = round(maxTurns / 0.75)
+warningCoefficient = 0.75
 distributableItems = ["dragonglass"]
 edibleItems = ["pork","mutton"]
 drinkableItems = ["wine"]
@@ -134,6 +134,7 @@ for i in range(len(possibleDifficulties)):
 if difficulty not in possibleDifficulties:
     difficulty = possibleDifficulties[1] #medium
     print (defaultDifficultyMessage)
+warningTurn = round(maxTurns * warningCoefficient)
 
 #introductory messages
 print (welcomeMessage + defaultUserName + fullStop + newLine)
