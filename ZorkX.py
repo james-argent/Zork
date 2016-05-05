@@ -1,7 +1,7 @@
 import sys
 import time
 
-#stuff that should never change and doesn't fit the other categories
+#immutable strings
 nameRequest = "What is your name, adventurer?\n"
 difficultyIntroMessage = "What difficulty would you like the game to be? Easy, Medium, or Hard?\n"
 difficultySelectedMessage = "You have selected the difficulty: "
@@ -13,7 +13,6 @@ quitMessage = "If you would like to quit, just close the console."
 ateMessage = "You ate your "
 drankMessage = "You drank your "
 dragonglassMessage = "You handed out the dragonglass."
-usedMessage = "You used your "
 nullMessage = "Looks like you forgot to say anything "
 wonMessage = "You helped defeat the attack from the Others! You win! The program will now close."
 seaMessage = "You can't go there, that's the sea!"
@@ -38,10 +37,9 @@ directions = ("north", "east", "south", "west")
 successMove = "You travelled "
 timeElapsed = 0
 horiVerti = (1, 0, 1, 0)
-maxInventorySize = 7
 maxTurns = 100
-hardMaxTurns = 48
-easyMaxTurns = 200
+maxInventorySize = 7
+possibleMaxTurns = [48,100,200]
 requiredPreparedness = 3
 maxRange = 5
 deadRange = maxRange + 1
@@ -126,18 +124,13 @@ if len(userName) < 1:
 #user selects a difficulty level, medium by default
 difficulty = input(difficultyIntroMessage)
 difficulty = difficulty.lower()
-if difficulty == possibleDifficulties[0]: #easy mode
-    maxTurns = easyMaxTurns
-    print (difficultySelectedMessage + difficulty + fullStop + newLine)
-if difficulty == possibleDifficulties[1]: #medium mode
-    print (difficultySelectedMessage + difficulty + fullStop + newLine)
-if difficulty == possibleDifficulties[2]: #hard mode
-    maxTurns = hardMaxTurns
-    print (difficultySelectedMessage + difficulty + fullStop + newLine)
+for i in range(len(possibleDifficulties)):
+    if difficulty == possibleDifficulties[i]: #easy mode
+        maxTurns = possibleMaxTurns[i]
+        print (difficultySelectedMessage + difficulty + fullStop + newLine)
 if difficulty not in possibleDifficulties:
-    difficulty = possibleDifficulties[1]
+    difficulty = possibleDifficulties[1] #medium
     print (defaultDifficultyMessage)
-
 
 #introductory messages
 print (welcomeMessage + userName + fullStop + newLine)
