@@ -14,7 +14,6 @@ ateMessage = "You ate your "
 drankMessage = "You drank your "
 dragonglassMessage = "You handed out the dragonglass."
 nullMessage = "Looks like you forgot to say anything "
-wonMessage = "You helped defeat the attack from the Others! You win! The program will now close."
 seaMessage = "You can't go there, that's the sea!"
 fullStop = "."
 maxRangeMessage = "You better stay near the wall or the Night's Watch may think you're deserting!"
@@ -22,6 +21,10 @@ deserterMessage = "You've strayed too far from the wall and the Night's Watch ha
 attackWarningMessage = "Careful, you're running out of time!"
 takeMessage1 = "You put the "
 takeMessage2 = " into your inventory."
+wonMessage1 = "You helped prepare for the attack from the Others! You win! You achieved this in "
+wonMessage2 = " turns."
+endProgress1 = "Your achieved progress was "
+endProgress2 = " out of "
 deadMessage = "You died."
 defaultDifficultyMessage = "You didn't enter a valid difficulty, so the difficulty has been set by default to medium."
 othersAttackMessage = "Oh no, the Others attacked and you were unprepared!"
@@ -222,7 +225,7 @@ while health > 0:
 
     #win condition
     if len(completedCastles) == requiredPreparedness:
-        print (wonMessage)
+        print (wonMessage1 + timeElapsed + wonMessage2)
         endGame()
         
     #passage of time
@@ -231,6 +234,7 @@ while health > 0:
     #the loss condition of the game
     if timeElapsed == maxTurns:
         print(othersAttackMessage)
+        print(endProgress1 + len(completedCastles) + endProgress2 + requiredPreparedness + fullStop)
         endGame()
     if timeElapsed == warningTurn:
         print(attackWarningMessage)
