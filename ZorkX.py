@@ -27,6 +27,7 @@ wonMessage2 = " turns."
 endProgress1 = "Your achieved progress was "
 endProgress2 = " out of "
 deadMessage = "You died."
+innappropriateMessage = "You can't do that here."
 defaultDifficultyMessage = "You didn't enter a valid difficulty, so the difficulty has been set by default to medium."
 othersAttackMessage = "Oh no, the Others attacked and you were unprepared!"
 inventoryFullMessage = "Your inventory is too full!"
@@ -98,6 +99,7 @@ def checkInput(thingToCheck):
 
 #tells the user where they are or just gives the coordinates if the place has no recorded name
 def identifyLocation(coordinates):
+    global found
     found = False
     for i in range (len(locationsList)):
         currentLocation = locationsList[i]
@@ -163,7 +165,7 @@ while health > 0:
     #picking up an item
     for location in locationsList:
         if currentLocationName == location.name:
-            if location.item in command and location.item is not null:
+            if location.item in command and location.item is not null and found == True:
                 if len(inventory) < maxInventorySize:
                     inventory.append(location.item)
                     print (takeMessage1 + location.item + takeMessage2)
@@ -171,6 +173,9 @@ while health > 0:
                     print (inventoryFullMessage)
                 reply = True
                 inventoryAction = True
+            if location.item in command and location.item is not null and found == False and reply == False:
+                print(innappropriateMessage)
+                reply = True
                
     #using up an item in the inventory
     if inventoryAction == False:
