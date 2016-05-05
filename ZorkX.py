@@ -14,6 +14,7 @@ drankMessage = "You drank your "
 dragonglassMessage = "You handed out the dragonglass."
 nullMessage = "Looks like you forgot to say anything "
 seaMessage = "You can't go there, that's the sea!"
+alreadyDoneMessage = "You've already done that!"
 fullStop = "."
 irrelevenceHint = "Not much to do here."
 maxRangeMessage = "You better stay near the wall or the Night's Watch may think you're deserting!"
@@ -178,7 +179,10 @@ while health > 0:
                 for location in locationsList:
                     if currentLocationName == location.name:
                         if item in distributableItems and location.winCon == True:
-                            if location.name not in completedCastles:
+                            if location.name in completedCastles and reply == False:
+                                print(alreadyDoneMessage)
+                                reply = True
+                            if location.name not in completedCastles and reply == False:
                                 completedCastles.append(location.name)
                                 inventory.remove(item)
                                 print (dragonglassMessage)
