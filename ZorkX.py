@@ -2,7 +2,6 @@ import sys
 import time
 
 #immutable strings
-nameRequest = "What is your name, adventurer?\n"
 difficultyIntroMessage = "What difficulty would you like the game to be? Easy, Medium, or Hard?\n"
 difficultySelectedMessage = "You have selected the difficulty: "
 welcomeMessage = "Welcome to Westeros, "
@@ -33,7 +32,6 @@ defaultUserName = "Jon Snow"
 unknownCommand = "That command was unknown. Please enter another.\n"
 unknownLocation = "This location doesn't have a name."
 idleMessage = "What would you like to do now?\n"
-userNameWrong = nullMessage + ", I will just call you " + defaultUserName + ".\n"
 null = ""
 newLine = "\n"
 directions = ("north", "east", "south", "west")
@@ -117,13 +115,6 @@ def endGame():
     time.sleep(4)
     sys.exit(0)
 
-#if the user doesn't enter a name, they're given a default name
-userName = input(nameRequest)
-if len(userName) < 1:
-        print (userNameWrong)
-        time.sleep(0.5)
-        userName = defaultUserName
-
 #user selects a difficulty level, medium by default
 difficulty = input(difficultyIntroMessage)
 difficulty = difficulty.lower()
@@ -136,7 +127,7 @@ if difficulty not in possibleDifficulties:
     print (defaultDifficultyMessage)
 
 #introductory messages
-print (welcomeMessage + userName + fullStop + newLine)
+print (welcomeMessage + defaultUserName + fullStop + newLine)
 print (inventoryMessage + str(inventory))
 print (healthMessage + str(health) + newLine)
 
