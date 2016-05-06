@@ -36,8 +36,8 @@ defaultUserName = "Jon Snow"
 unknownCommand = "That command was unknown. Please enter another.\n"
 unknownLocation = "This location doesn't have a name."
 idleMessage = "What would you like to do now?\n"
-samIntro = "Hey Jon! It's me, Sam."
-samOptions = "a:Tell me about the whitewalkers.\nb:Tell me about the Wall.\nc:Bye.\n\n"
+samIntro = "Sam: Hey Jon! It's me, Sam."
+samOptions = "a: Tell me about the whitewalkers.\nb :Tell me about the Wall.\nc :Bye.\n\n"
 null = ""
 newLine = "\n"
 directions = ("north", "east", "south", "west")
@@ -58,9 +58,9 @@ useableItems = []
 allItems = distributableItems + edibleItems + drinkableItems + useableItems
 possibleDifficulties = ["easy","medium","hard"]
 samReplies = ["a","b","c"]
-samSentences = ["The whitewalkers are a race of ancient evil zombies which are kept at bay by the wall. They're weak to dragons and dragonglass," +
-    "but they're invading soon and I don't think we're well equipped to fight them.","The wall has many castles along it, but only 3 of them are manned:" +
-    "Castle Black, Eastwatch-by-the-Sea, and the Shadow Tower.","Bye Jon! I'm heading off to Oldtown."]
+samSentences = ["Sam: The whitewalkers are a race of ancient evil zombies which are kept at bay by the wall. They're weak to dragons and dragonglass," +
+    "but they're invading soon and I don't think we're well equipped to fight them.","Sam: The wall has many castles along it, but only 3 of them are manned:" +
+    "Castle Black, Eastwatch-by-the-Sea, and the Shadow Tower.","Sam: Bye Jon! I'm heading off to Oldtown."]
 
 #allows for the referral of locations' attributes by referring to the actual attribute names
 class Location:
