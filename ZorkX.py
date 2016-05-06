@@ -148,6 +148,10 @@ def samTalk():
         print (unknownCommand)
     samTalk()
 
+##########################################################
+#################  THE  PROGRAM  BEGINS  #################
+##########################################################
+
 #user selects a difficulty level, medium by default
 difficulty = input(difficultyIntroMessage)
 difficulty = difficulty.lower()
