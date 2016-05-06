@@ -40,7 +40,6 @@ null = ""
 newLine = "\n"
 directions = ("north", "east", "south", "west")
 successMove = "You travelled "
-timeElapsed = 0
 horiVerti = (1, 0, 1, 0)
 maxTurns = 100
 maxInventorySize = 7
@@ -49,12 +48,11 @@ requiredPreparedness = 3
 maxRange = 5
 deadRange = maxRange + 1
 warningCoefficient = 0.75
-easyMode = False
 distributableItems = ["dragonglass"]
 edibleItems = ["pork","mutton"]
 drinkableItems = ["wine"]
-allItems = distributableItems + edibleItems + drinkableItems
-completedCastles = []
+useableItems = []
+allItems = distributableItems + edibleItems + drinkableItems + useableItems
 possibleDifficulties = ["easy","medium","hard"]
 
 #allows for the referral of locations' attributes by referring to the actual attribute names
@@ -75,7 +73,7 @@ locationsList = [Location(0, 0, "Castle Black", "You're home, but something's no
                  Location(-1, 1, "Crastor's Keep", "Keep your hands off of his daughter wives or he'll kill you. There's some tasty pork roasting over the fire.", "pork"),
                  Location(-2, 2, "The Fist of the First Men", "A big battle happened here, but where are the dead brothers? There is a pile of dragonglass...", "dragonglass"),
                  Location(2, 2, "Hardhome", "The wildings have a settlement here. Better not disturb them."),
-                 Location(0, -1, "Moletown", "Known for its attractive qualities."),
+                 Location(0, -1, "Moletown", "Known for its brothel."),
                  Location(0, -4, "Winterfell", "My old home. The north remembers."),
                  Location(2, -3, "The Dreadfort", "The seat of the traitorous House Bolton."),
                  Location(-1, 0, "Icemark", "An abandoned castle along the wall. There's noone here."),
@@ -83,11 +81,14 @@ locationsList = [Location(0, 0, "Castle Black", "You're home, but something's no
                  Location(-1, -1, "Queen's Crown", "An abandoned holdfast and village."),
                  Location(2, -2, "Karhold", "A strong northern castle and the seat of House Karstark.")]
 
-#information about your character which is subject to change
+#information from the beginning which is subject to change
 userLocationCoordinates = [0,0] # Castle Black
 health = 10
 inventory = ["wine","mutton"]
+completedCastles = []
 currentLocationName = ""
+easyMode = False
+timeElapsed = 0
 
 #arrays which must be the same length
 knownCommands = ["inventory", "health", "quit"]
