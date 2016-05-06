@@ -49,6 +49,7 @@ requiredPreparedness = 3
 maxRange = 5
 deadRange = maxRange + 1
 warningCoefficient = 0.75
+easyMode = False
 distributableItems = ["dragonglass"]
 edibleItems = ["pork","mutton"]
 drinkableItems = ["wine"]
@@ -100,7 +101,7 @@ def checkInput(thingToCheck):
             print (knownMessages[i] + str(knownCurrent[i]))
 
 #tells the user where they are or just gives the coordinates if the place has no recorded name
-def identifyLocation(coordinates):
+def identifyLocation(coordinates, easyMode):
     global found
     found = False
     for i in range (len(locationsList)):
@@ -116,7 +117,8 @@ def identifyLocation(coordinates):
             global currentLocationName
             currentLocationName = locationsList[i].name
     if found == False:
-        print (locationMessage + str(coordinates))
+        if easyMode == True:
+            print (locationMessage + str(coordinates))
         print (unknownLocation)
 
 #3 second delay and exit
@@ -130,6 +132,7 @@ difficulty = difficulty.lower()
 for i in range(len(possibleDifficulties)):
     if difficulty == possibleDifficulties[i]: #easy mode
         maxTurns = possibleMaxTurns[i]
+        easyMode = True
         print (difficultySelectedMessage + difficulty + fullStop + newLine)
 if difficulty not in possibleDifficulties:
     difficulty = possibleDifficulties[1] #medium
@@ -147,7 +150,7 @@ while health > 0:
     inventoryAction = False
 
     #update the user on their situation
-    identifyLocation(userLocationCoordinates)
+    identifyLocation(userLocationCoordinates, easyMode)
 
     #ask for next action
     command = input(idleMessage)
