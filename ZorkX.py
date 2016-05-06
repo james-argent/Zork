@@ -1,7 +1,7 @@
 import sys
 import time
 
-#immutable strings
+#immutable strings and info
 difficultyIntroMessage = "What difficulty would you like the game to be? Easy, Medium, or Hard?\n"
 difficultySelectedMessage = "You have selected the difficulty: "
 welcomeMessage = "Welcome to Westeros, "
@@ -43,6 +43,7 @@ successMove = "You travelled "
 horiVerti = (1, 0, 1, 0)
 maxTurns = 100
 maxInventorySize = 7
+seaLimit = 2
 possibleMaxTurns = [48,100,200]
 requiredPreparedness = 3
 maxRange = 5
@@ -214,7 +215,7 @@ while health > 0:
     #deals with movement
     for dir in range(len(directions)):
         if directions[dir] in command:
-            if (directions[dir] == directions[1] and userLocationCoordinates[0] == 2) or (directions[dir] == directions[3] and userLocationCoordinates[0] == -2):
+            if (directions[dir] == directions[1] and userLocationCoordinates[0] == seaLimit) or (directions[dir] == directions[3] and userLocationCoordinates[0] == -seaLimit):
                 print (seaMessage)
                 reply = True
             else:
@@ -230,6 +231,7 @@ while health > 0:
                 if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
                     print (maxRangeMessage)
 
+    #correct command, but wrong situation
     if reply == False:
         for item in allItems:
             if item in command:
