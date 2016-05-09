@@ -9,7 +9,6 @@ welcomeMessage = "Welcome to Westeros, "
 inventoryMessage = "Your current inventory is: "
 locationMessage = "Your current location is: "
 healthMessage = "Your current health is: "
-quitMessage = "If you would like to quit, just close the console."
 ateMessage = "You ate your "
 drankMessage = "You drank your "
 dragonglassMessage = "You handed out the dragonglass."
@@ -63,6 +62,7 @@ maxHealth = 10
 easyMode = False
 deadRange = maxRange + 1
 warningCoefficient = 0.75
+quitCommand = "quit"
 distributableItems = ["dragonglass"]
 edibleItems = ["pork","mutton"]
 drinkableItems = ["wine"]
@@ -83,9 +83,9 @@ currentLocationName = null
 timeElapsed = 0
 
 #arrays which must be the same length
-knownCommands = ["inventory", "health", "quit"]
-knownMessages = [inventoryMessage, healthMessage, quitMessage]
-knownCurrent = [inventory, health, null]
+knownCommands = ["inventory", "health"]
+knownMessages = [inventoryMessage, healthMessage]
+knownCurrent = [inventory, health]
 
 ##########################################################
 ######################## CLASSES #########################
@@ -121,12 +121,6 @@ locationsList = [Location(0, 0, "Castle Black", "You're home, but something's no
 ####################### FUNCTIONS ########################
 ##########################################################
 
-#general commands
-def checkInput(thingToCheck):
-    for i in range (len(knownCommands)):
-        if knownCommands[i] in thingToCheck:
-            print (knownMessages[i] + str(knownCurrent[i]))
-
 #tells the user where they are or just gives the coordinates if the place has no recorded name
 def identifyLocation(coordinates, easyMode):
     global found
@@ -148,10 +142,20 @@ def identifyLocation(coordinates, easyMode):
             print (locationMessage + str(coordinates))
         print (unknownLocation)
 
-#3 second delay and exit
-def endGame():
+#4 second delay and exit
+def slowEndGame():
     time.sleep(4)
     sys.exit(0)
+
+#no delay and exit
+def quickEndGame():
+    sys.exit(0)
+    
+#general commands
+def checkInput(thingToCheck):
+    for i in range (len(knownCommands)):
+        if knownCommands[i] in thingToCheck:
+            print (knownMessages[i] + str(knownCurrent[i]))
 
 #decides if you'll randomly be attacked
 def randomAttack():
@@ -219,7 +223,10 @@ while health > 0:
         print (nullMessage + fullStop + newLine)
         reply = True
 
-    #catches the generic requests "inventory", "health" and "quit"
+    if command == quitCommand:
+        quickEndGame()
+
+    #catches the generic requests "inventory", "health"
     for knownCommand in knownCommands:
         if knownCommand in command:
             checkInput(command)
@@ -285,7 +292,7 @@ while health > 0:
                 print (successMove + directions[dir] + fullStop)
                 if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= deadRange:
                     print (deserterMessage)
-                    endGame()
+                    slowEndGame()
                 if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
                     print (maxRangeMessage)
 
@@ -310,7 +317,7 @@ while health > 0:
     #win condition
     if len(completedCastles) == requiredPreparedness:
         print (wonMessage1 + str(timeElapsed) + wonMessage2)
-        endGame()
+        slowEndGame()
         
     #passage of time
     timeElapsed += 1
@@ -318,9 +325,9 @@ while health > 0:
     #the loss condition of the game
     if timeElapsed == maxTurns:
         print(othersAttackMessage + newLine + endProgress1 + len(completedCastles) + endProgress2 + requiredPreparedness + fullStop)
-        endGame()
+        slowEndGame()
     if timeElapsed == warningTurn:
         print(attackWarningMessage)
 
 print (deadMessage)
-endGame()
+slowEndGame()
