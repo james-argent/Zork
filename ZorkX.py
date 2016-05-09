@@ -298,11 +298,13 @@ while health > 0:
                     userLocationCoordinates[horiVerti[dir]] -= 1
                 reply = True
                 print (successMove + directions[dir] + fullStop)
-                if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= deadRange:
-                    print (deserterMessage)
-                    slowEndGame()
-                if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
-                    print (maxRangeMessage)
+    
+    #check to see if the player has moved out of bounds
+    if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= deadRange:
+        print (deserterMessage)
+        slowEndGame()
+    if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
+        print (maxRangeMessage)
 
     #if north of the wall, random attacks may occur
     if userLocationCoordinates[1] > 0:
