@@ -57,6 +57,7 @@ foodHeal = 1
 possibleMaxTurns = [easyTurns, maxTurns, hardTurns]
 requiredPreparedness = 3
 maxRange = 5
+advisedVisitLimit = 5
 startingHealth = 10
 maxHealth = 10
 easyMode = False
@@ -73,11 +74,6 @@ samSentences = ["Sam: The whitewalkers are a race of ancient evil zombies which 
     "but they're invading soon and I don't think we're well equipped to fight them.","Sam: The wall has many castles along it, but only 3 of them are manned:" +
     "Castle Black, Eastwatch-by-the-Sea, and the Shadow Tower.","Sam: Bye Jon! I'm heading off to Oldtown."]
 
-#arrays which must be the same length
-knownCommands = ["inventory", "health", "quit"]
-knownMessages = [inventoryMessage, healthMessage, quitMessage]
-knownCurrent = [inventory, health, null]
-
 #information from the beginning which is subject to change
 userLocationCoordinates = [0,0] # startingCoordinates, Castle Black
 health = startingHealth
@@ -85,6 +81,11 @@ inventory = ["wine","mutton"]
 completedCastles = []
 currentLocationName = null
 timeElapsed = 0
+
+#arrays which must be the same length
+knownCommands = ["inventory", "health", "quit"]
+knownMessages = [inventoryMessage, healthMessage, quitMessage]
+knownCurrent = [inventory, health, null]
 
 ##########################################################
 ######################## CLASSES #########################
@@ -136,7 +137,7 @@ def identifyLocation(coordinates, easyMode):
             print (locationMessage + locationsList[i].name)
             print (locationsList[i].comment)
             locationsList[i].visits += 1
-            if locationsList[i].visits >= 5 and locationsList[i].winCon == False and locationsList[i].item == null:
+            if locationsList[i].visits >= advisedVisitLimit and locationsList[i].winCon == False and locationsList[i].item == null:
                 print (irrelevenceHint)
             found = True
             print 
@@ -306,7 +307,7 @@ while health > 0:
 
     #win condition
     if len(completedCastles) == requiredPreparedness:
-        print (wonMessage1 + timeElapsed + wonMessage2)
+        print (wonMessage1 + str(timeElapsed) + wonMessage2)
         endGame()
         
     #passage of time
@@ -314,8 +315,7 @@ while health > 0:
 
     #the loss condition of the game
     if timeElapsed == maxTurns:
-        print(othersAttackMessage)
-        print(endProgress1 + len(completedCastles) + endProgress2 + requiredPreparedness + fullStop)
+        print(othersAttackMessage + newLine + endProgress1 + len(completedCastles) + endProgress2 + requiredPreparedness + fullStop)
         endGame()
     if timeElapsed == warningTurn:
         print(attackWarningMessage)
