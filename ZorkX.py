@@ -47,15 +47,19 @@ successMove = "You travelled "
 lowerRandom = 1
 upperRandom = 8
 horiVerti = (1, 0, 1, 0)
+easyTurns = 48
 maxTurns = 100
+hardTurns = 200
 maxInventorySize = 7
 seaLimit = 2
 wightDamage = 1
 foodHeal = 1
-possibleMaxTurns = [48,100,200]
+possibleMaxTurns = [easyTurns, maxTurns, hardTurns]
 requiredPreparedness = 3
 maxRange = 5
+startingHealth = 10
 maxHealth = 10
+easyMode = False
 deadRange = maxRange + 1
 warningCoefficient = 0.75
 distributableItems = ["dragonglass"]
@@ -68,6 +72,23 @@ samReplies = ["a","b","c"]
 samSentences = ["Sam: The whitewalkers are a race of ancient evil zombies which are kept at bay by the wall. They're weak to dragons and dragonglass," +
     "but they're invading soon and I don't think we're well equipped to fight them.","Sam: The wall has many castles along it, but only 3 of them are manned:" +
     "Castle Black, Eastwatch-by-the-Sea, and the Shadow Tower.","Sam: Bye Jon! I'm heading off to Oldtown."]
+
+#arrays which must be the same length
+knownCommands = ["inventory", "health", "quit"]
+knownMessages = [inventoryMessage, healthMessage, quitMessage]
+knownCurrent = [inventory, health, null]
+
+#information from the beginning which is subject to change
+userLocationCoordinates = [0,0] # startingCoordinates, Castle Black
+health = startingHealth
+inventory = ["wine","mutton"]
+completedCastles = []
+currentLocationName = null
+timeElapsed = 0
+
+##########################################################
+######################## CLASSES #########################
+##########################################################
 
 #allows for the referral of locations' attributes by referring to the actual attribute names
 class Location:
@@ -94,20 +115,6 @@ locationsList = [Location(0, 0, "Castle Black", "You're home, but something's no
                  Location(1, 0, "Rimegate", "An abandoned castle along the wall. There's noone here."),
                  Location(-1, -1, "Queen's Crown", "An abandoned holdfast and village."),
                  Location(2, -2, "Karhold", "A strong northern castle and the seat of House Karstark.")]
-
-#information from the beginning which is subject to change
-userLocationCoordinates = [0,0] # Castle Black
-health = 10
-inventory = ["wine","mutton"]
-completedCastles = []
-currentLocationName = ""
-easyMode = False
-timeElapsed = 0
-
-#arrays which must be the same length
-knownCommands = ["inventory", "health", "quit"]
-knownMessages = [inventoryMessage, healthMessage, quitMessage]
-knownCurrent = [inventory, health, null]
 
 ##########################################################
 ####################### FUNCTIONS ########################
