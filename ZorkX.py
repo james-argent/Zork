@@ -49,6 +49,7 @@ seaLimit = 2
 possibleMaxTurns = [48,100,200]
 requiredPreparedness = 3
 maxRange = 5
+maxHealth = 10
 deadRange = maxRange + 1
 warningCoefficient = 0.75
 distributableItems = ["dragonglass"]
@@ -101,6 +102,10 @@ timeElapsed = 0
 knownCommands = ["inventory", "health", "quit"]
 knownMessages = [inventoryMessage, healthMessage, quitMessage]
 knownCurrent = [inventory, health, null]
+
+##########################################################
+####################### FUNCTIONS ########################
+##########################################################
 
 #general commands
 def checkInput(thingToCheck):
@@ -232,6 +237,9 @@ while health > 0:
                     print (ateMessage + item + fullStop)
                     inventory.remove(item)
                     reply = True
+                    if health < maxHealth:
+                        health += 1
+                        print (healthMessage + str(health))
                     break
                 if item in drinkableItems:
                     print (drankMessage + item + fullStop)
