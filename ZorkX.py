@@ -205,7 +205,6 @@ samTalk()
 while health > 0:
     reply = False
     inventoryAction = False
-    attack = False
 
     #update the user on their situation
     identifyLocation(userLocationCoordinates, easyMode)
@@ -289,11 +288,13 @@ while health > 0:
                     endGame()
                 if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
                     print (maxRangeMessage)
-                if userLocationCoordinates[1] > 0 and attack == False:
-                    randomAttack()
-                    if attack == True:
-                        health -= wightDamage
-                        print (wightMessage + newLine + healthMessage + str(health))
+
+    #if north of the wall, random attacks may occur
+    if userLocationCoordinates[1] > 0:
+        randomAttack()
+        if attack == True:
+            health -= wightDamage
+            print (wightMessage + newLine + healthMessage + str(health))
 
     #correct command, but wrong situation
     if reply == False:
