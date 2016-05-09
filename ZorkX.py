@@ -83,14 +83,14 @@ samSentences = ["Sam: The whitewalkers are a race of ancient evil zombies which 
     "Castle Black, Eastwatch-by-the-Sea, and the Shadow Tower.","Sam: Bye Jon! I'm heading off to Oldtown."]
 
 #information from the beginning which is subject to change
-userLocationCoordinates = [0,0] # startingCoordinates, Castle Black
+userLocationCoordinates = [0,0] # starting Coordinates, Castle Black
 health = startingHealth
 inventory = ["wine","mutton"]
 completedCastles = []
 currentLocationName = null
 timeElapsed = 0
 
-#arrays which must be the same length
+#common commands which just demand some information
 knownCommands = ["inventory", "health"]
 knownMessages = [inventoryMessage, healthMessage]
 knownCurrent = [inventory, health]
