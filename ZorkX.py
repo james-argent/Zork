@@ -222,7 +222,7 @@ while health > 0:
     identifyLocation(userLocationCoordinates, easyMode)
 
     #ask for next action
-    command = input(idleMessage)
+    command = input(idleMessage + newLine)
     command = command.lower()
     print (newLine)
 
