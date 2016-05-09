@@ -11,6 +11,7 @@ locationMessage = "Your current location is: "
 healthMessage = "Your current health is: "
 ateMessage = "You ate your "
 drankMessage = "You drank your "
+successMove = "You travelled "
 dragonglassMessage = "You handed out the dragonglass."
 nullMessage = "Looks like you forgot to say anything "
 seaMessage = "You can't go there, that's the sea!"
@@ -37,38 +38,45 @@ defaultUserName = "Jon Snow"
 unknownCommand = "That command was unknown. Please enter another.\n"
 unknownLocation = "This location doesn't have a name."
 idleMessage = "What would you like to do now?\n"
-samIntro = "Sam: Hey Jon! It's me, Sam."
-samOptions = "a: Tell me about the whitewalkers.\nb: Tell me about the Wall.\nc: Bye.\n\n"
 null = ""
 newLine = "\n"
+quitCommand = "quit"
+
+#movement stuff
 directions = ("north", "east", "south", "west")
-successMove = "You travelled "
 lowerRandom = 1
 upperRandom = 8
 horiVerti = (1, 0, 1, 0)
+maxRange = 5
+deadRange = maxRange + 1
+advisedVisitLimit = 5
+seaLimit = 2
+
+#difficulty and turns stuff
 easyTurns = 48
 maxTurns = 100
 hardTurns = 200
+possibleDifficulties = ["easy","medium","hard"]
 possibleMaxTurns = [easyTurns, maxTurns, hardTurns]
-maxInventorySize = 7
-seaLimit = 2
 wightDamage = 1
 foodHeal = 1
 requiredPreparedness = 3
-maxRange = 5
-advisedVisitLimit = 5
 startingHealth = 10
 maxHealth = 10
 easyMode = False
-deadRange = maxRange + 1
 warningCoefficient = 0.75
-quitCommand = "quit"
+
+#item stuff
 distributableItems = ["dragonglass"]
 edibleItems = ["pork","mutton"]
 drinkableItems = ["wine"]
 useableItems = []
 allItems = distributableItems + edibleItems + drinkableItems + useableItems
-possibleDifficulties = ["easy","medium","hard"]
+maxInventorySize = 7
+
+#conversation stuff
+samIntro = "Sam: Hey Jon! It's me, Sam."
+samOptions = "a: Tell me about the whitewalkers.\nb: Tell me about the Wall.\nc: Bye.\n\n"
 samReplies = ["a","b","c"]
 samSentences = ["Sam: The whitewalkers are a race of ancient evil zombies which are kept at bay by the wall. They're weak to dragons and dragonglass," +
     "but they're invading soon and I don't think we're well equipped to fight them.","Sam: The wall has many castles along it, but only 3 of them are manned:" +
