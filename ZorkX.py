@@ -1,5 +1,6 @@
 import sys
 import time
+import random
 
 #immutable strings and info
 difficultyIntroMessage = "What difficulty would you like the game to be? Easy, Medium, or Hard?\n"
@@ -32,6 +33,7 @@ innappropriateMessage = "You can't do that here."
 defaultDifficultyMessage = "You didn't enter a valid difficulty, so the difficulty has been set by default to medium."
 othersAttackMessage = "Oh no, the Others attacked and you were unprepared!"
 inventoryFullMessage = "Your inventory is too full!"
+wightMessage = "You were attacked by wights!"
 defaultUserName = "Jon Snow"
 unknownCommand = "That command was unknown. Please enter another.\n"
 unknownLocation = "This location doesn't have a name."
@@ -42,10 +44,14 @@ null = ""
 newLine = "\n"
 directions = ("north", "east", "south", "west")
 successMove = "You travelled "
+lowerRandom = 1
+upperRandom = 8
 horiVerti = (1, 0, 1, 0)
 maxTurns = 100
 maxInventorySize = 7
 seaLimit = 2
+wightDamage = 1
+foodHeal = 1
 possibleMaxTurns = [48,100,200]
 requiredPreparedness = 3
 maxRange = 5
@@ -138,6 +144,15 @@ def identifyLocation(coordinates, easyMode):
 def endGame():
     time.sleep(4)
     sys.exit(0)
+
+#decides if you'll randomly be attacked
+def randomAttack():
+    global attack
+    x = random.randint(lowerRandom, upperRandom) # chance of an attack is 1/range
+    if x == lowerRandom:
+        attack = True
+    else:
+        attack = False
 
 #recursive conversation function
 def samTalk():
@@ -238,7 +253,7 @@ while health > 0:
                     inventory.remove(item)
                     reply = True
                     if health < maxHealth:
-                        health += 1
+                        health += foodHeal
                         print (healthMessage + str(health))
                     break
                 if item in drinkableItems:
@@ -265,6 +280,11 @@ while health > 0:
                     endGame()
                 if abs(userLocationCoordinates[0]) + abs(userLocationCoordinates[1]) >= maxRange:
                     print (maxRangeMessage)
+                if userLocationCoordinates[1] > 0:
+                    randomAttack()
+                    if attack == True:
+                        health -= wightDamage
+                        print (wightMessage + newLine + healthMessage + str(health))
 
     #correct command, but wrong situation
     if reply == False:
