@@ -17,6 +17,7 @@ nullMessage = "Looks like you forgot to say anything "
 seaMessage = "You can't go there, that's the sea!"
 alreadyDoneMessage = "You've already done that!"
 fullStop = "."
+sam = "Sam"
 illEquippedMessage = "You don't have any "
 irrelevenceHint = "Not much to do here."
 maxRangeMessage = "You better stay near the wall or the Night's Watch may think you're deserting!"
@@ -39,6 +40,7 @@ unknownCommand = "That command was unknown. Please enter another.\n"
 unknownLocation = "This location doesn't have a name."
 idleMessage = "What would you like to do now?\n"
 null = ""
+colonSpace = ": "
 newLine = "\n"
 quitCommand = "quit"
 
@@ -73,14 +75,6 @@ drinkableItems = ["wine"]
 useableItems = []
 allItems = distributableItems + edibleItems + drinkableItems + useableItems
 maxInventorySize = 7
-
-#conversation stuff
-samIntro = "Sam: Hey Jon! It's me, Sam."
-samOptions = "a: Tell me about the whitewalkers.\nb: Tell me about the Wall.\nc: Bye.\n\n"
-samReplies = ["a","b","c"]
-samSentences = ["Sam: The whitewalkers are a race of ancient evil zombies which are kept at bay by the wall. They're weak to dragons and dragonglass," +
-    "but they're invading soon and I don't think we're well equipped to fight them.","Sam: The wall has many castles along it, but only 3 of them are manned:" +
-    "Castle Black, Eastwatch-by-the-Sea, and the Shadow Tower.","Sam: Bye Jon! I'm heading off to Oldtown."]
 
 #information from the beginning which is subject to change
 userLocationCoordinates = [0,0] # starting Coordinates, Castle Black
@@ -124,6 +118,21 @@ locationsList = [Location(0, 0, "Castle Black", "You're home, but something's no
                  Location(1, 0, "Rimegate", "An abandoned castle along the wall. There's noone here."),
                  Location(-1, -1, "Queen's Crown", "An abandoned holdfast and village."),
                  Location(2, -2, "Karhold", "A strong northern castle and the seat of House Karstark.")]
+
+#class for the set-up of all conversations
+class Conversation:
+    def __init__(self, participant, intro, options, replies, sentences):
+        self.participant = participant
+        self.intro = intro
+        self.options = options
+        self.replies = replies
+        self.sentences = sentences
+
+#relevant information and contents of all conversations
+conversations = [Conversation("Sam","Hey Jon! It's me, Sam.","a: Tell me about the whitewalkers.\nb: Tell me about the Wall.\nc: Bye.\n\n",("a","b","c"),
+    ("The whitewalkers are a race of ancient evil zombies which are kept at bay by the wall. They're weak to dragons and dragonglass, " +
+    "but they're invading soon and I don't think we're well equipped to fight them.","The wall has many castles along it, but only 3 of them are manned: " +
+    "Castle Black, Eastwatch-by-the-Sea, and the Shadow Tower.","Bye Jon! I'm heading off to Oldtown."))]
 
 ##########################################################
 ####################### FUNCTIONS ########################
@@ -174,19 +183,22 @@ def randomAttack():
     else:
         attack = False
 
-#recursive conversation function
-def samTalk():
-    validAnswer = False
-    samRequest = input(samOptions)
-    for i in range (len(samReplies)):
-        if samRequest == samReplies[i]:
-            print (newLine + samSentences[i] + newLine)
-            validAnswer = True
-    if samRequest == samReplies[len(samReplies)-1]:
-        return
-    if validAnswer == False:
-        print (unknownCommand)
-    samTalk()
+#generic function to handle all conversations
+def talkTo(name):
+    for Conversation in conversations:
+        if name == Conversation.participant:
+            validAnswer = False
+            print (Conversation.participant + colonSpace + Conversation.intro)
+            requestInput = input(Conversation.options)
+            for i in range (len(Conversation.replies)):
+                if requestInput == Conversation.replies[i]:
+                    print (newLine + Conversation.participant + colonSpace + Conversation.sentences[i] + newLine)
+                    validAnswer = True
+            if requestInput == Conversation.replies[len(Conversation.replies)-1]:
+                return
+            if validAnswer == False:
+                print (unknownCommand)
+            talkTo(name)
 
 ##########################################################
 #################  THE  PROGRAM  BEGINS  #################
@@ -210,8 +222,8 @@ print (welcomeMessage + defaultUserName + fullStop + newLine)
 print (inventoryMessage + str(inventory))
 print (healthMessage + str(health) + newLine)
 
-print (samIntro)
-samTalk()
+#opening, informative conversation with Samwell Tarly
+talkTo(sam)
 
 #keep the game going as long as the user is 'alive'
 while health > 0:
