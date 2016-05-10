@@ -2,7 +2,7 @@ import sys
 import time
 import random
 
-#immutable strings and info
+#immutable strings
 difficultyIntroMessage = "What difficulty would you like the game to be? Easy, Medium, or Hard?\n"
 difficultySelectedMessage = "You have selected the difficulty: "
 welcomeMessage = "Welcome to Westeros, "
@@ -13,11 +13,10 @@ ateMessage = "You ate your "
 drankMessage = "You drank your "
 successMove = "You travelled "
 dragonglassMessage = "You handed out the dragonglass."
-nullMessage = "Looks like you forgot to say anything "
+nullMessage = "Looks like you forgot to say anything."
 seaMessage = "You can't go there, that's the sea!"
 alreadyDoneMessage = "You've already done that!"
 fullStop = "."
-sam = "Sam"
 illEquippedMessage = "You don't have any "
 irrelevenceHint = "Not much to do here."
 maxRangeMessage = "You better stay near the wall or the Night's Watch may think you're deserting!"
@@ -43,6 +42,7 @@ null = ""
 colonSpace = ": "
 newLine = "\n"
 quitCommand = "quit"
+sam = "Sam"
 
 #movement stuff
 directions = ("north", "east", "south", "west")
@@ -240,7 +240,7 @@ while health > 0:
 
     #catches if the user didn't put in an input
     if command == null:
-        print (nullMessage + fullStop + newLine)
+        print (nullMessage + newLine)
         reply = True
 
     if command == quitCommand:
