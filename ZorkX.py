@@ -143,7 +143,6 @@ def identifyLocation(coordinates, easyMode):
     global found
     found = False
     for i in range (len(locationsList)):
-        currentLocation = locationsList[i]
         if coordinates[0] == locationsList[i].x and coordinates[1] == locationsList[i].y:
             print (locationMessage + locationsList[i].name)
             print (locationsList[i].comment)
