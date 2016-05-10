@@ -253,17 +253,17 @@ while health > 0:
             reply = True
  
     #picking up an item
-    for location in locationsList:
-        if currentLocationName == location.name:
-            if location.item in command and location.item is not null and found == True:
+    for Location in locationsList:
+        if currentLocationName == Location.name:
+            if Location.item in command and Location.item is not null and found == True:
                 if len(inventory) < maxInventorySize:
-                    inventory.append(location.item)
-                    print (takeMessage1 + location.item + takeMessage2)
+                    inventory.append(Location.item)
+                    print (takeMessage1 + Location.item + takeMessage2)
                 else:
                     print (inventoryFullMessage)
                 reply = True
                 inventoryAction = True
-            if location.item in command and location.item is not null and found == False and reply == False:
+            if Location.item in command and Location.item is not null and found == False and reply == False:
                 print(innappropriateMessage)
                 reply = True
                
@@ -272,13 +272,13 @@ while health > 0:
         for item in inventory:
             if item in command:
                 for location in locationsList:
-                    if currentLocationName == location.name:
-                        if item in distributableItems and location.winCon == True:
-                            if location.name in completedCastles and reply == False:
+                    if currentLocationName == Location.name:
+                        if item in distributableItems and Location.winCon == True:
+                            if Location.name in completedCastles and reply == False:
                                 print(alreadyDoneMessage)
                                 reply = True
-                            if location.name not in completedCastles and reply == False:
-                                completedCastles.append(location.name)
+                            if Location.name not in completedCastles and reply == False:
+                                completedCastles.append(Location.name)
                                 inventory.remove(item)
                                 print (dragonglassMessage)
                                 reply = True
